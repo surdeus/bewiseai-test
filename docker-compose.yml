@@ -1,6 +1,6 @@
 
 networks:
-  mynet:
+  net:
     driver: bridge
 
 services:
@@ -14,7 +14,7 @@ services:
         source: .
         target: /app
     networks:
-      - mynet
+      - net
     environment:
       DB_DRIVER: postgres
       DB_HOST: db
@@ -36,8 +36,8 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./volume/db:/var/lib/postgresql/data
-    ports:
+    expose:
       - 5432:5432
     networks:
-      - mynet
+      - net
 
