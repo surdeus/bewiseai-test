@@ -12,7 +12,7 @@ services:
     volumes:
       - type: bind
         source: .
-        target: /app
+        target: /app/
     networks:
       - net
     environment:
@@ -20,7 +20,7 @@ services:
       DB_HOST: db
       DB_USER: root
       DB_PASS: secret
-      DB_NAME: quize
+      DB_NAME: quizes
       DB_PORT: 5432
     depends_on:
       - db
