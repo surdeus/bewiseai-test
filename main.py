@@ -63,7 +63,7 @@ eng_str = f"postgresql://{user}:{pwd}@{host}:{port}/{name}"
 engine = sqla.create_engine(eng_str)
 Base.metadata.create_all(engine)
 
-@app.post('/questions/')
+@app.post('/questions')
 def read_random_questions(q: RandomQuestions):
     qs = api.random_questions(q.questions_num)
     ret = {}

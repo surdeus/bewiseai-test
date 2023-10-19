@@ -26,6 +26,7 @@ services:
       - db
     ports:
       - 3000:80
+    restart: always
 
   db:
     image: postgres:11.1-alpine
