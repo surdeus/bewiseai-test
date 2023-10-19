@@ -8,7 +8,7 @@ import requests
 class API:
     def __init__(self, url: str):
         self.URL = url
-    def Random(self, n: int):
+    def random_questions(self, n: int):
         res = requests.get(
             self.URL + f'/random',
             params=[
@@ -27,6 +27,11 @@ class QuestionTable(Base):
     text: orm.Mapped[str] = orm.mapped_column(sqla.String(256))
     answer: orm.Mapped[str] = orm.mapped_column(sqla.String(64))
 
+class Question(pydantic.BaseModel):
+    id: int
+    text: str
+    answer: str
+
 class RandomQuestions(pydantic.BaseModel):
     questions_num: int
 
@@ -35,6 +40,9 @@ app = FastAPI()
 
 @app.post('/questions/')
 def read_random_questions(q: RandomQuestions):
-    res = api.Random(q.questions_num)
-    return res.content
+    res = api.random_questions(q.questions_num)
+    c = res.content
+    js = res.json()
+    qs = [Question(id=j['id'], text=j['question'], answer=j['answer']) for j in js ]
+    return qs
 
